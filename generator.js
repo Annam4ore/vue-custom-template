@@ -35,21 +35,91 @@ module.exports = (api, options) => {
             "vuetify-loader": "^1.7.0"
         }
     });
+    
+    // 直接生成 README.md 文件
+    api.render({
+        'README.md': () => `# ${options.name || '專案名稱'}
+
+> ${options.description || '專案描述'}
+
+## 快速開始
+
+### 安裝依賴
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 開發環境
+
+啟動開發服務器，支援熱重載：
+
+\`\`\`bash
+npm run serve
+\`\`\`
+
+### 生產環境
+
+編譯與打包代碼用於生產環境：
+
+\`\`\`bash
+npm run build
+\`\`\`
+
+## 環境相關命令
+
+\`\`\`bash
+# 使用 production 環境啟動服務
+npm run pro-serve
+
+\`\`\`
+
+## 使用此模板創建新專案
+
+### 先決條件
+
+確保已安裝最新版本的 Vue CLI：
+
+\`\`\`bash
+npm install -g @vue/cli
+\`\`\`
+
+### 從 GitHub 創建專案
+
+\`\`\`bash
+# 公開倉庫
+vue create --preset github使用者名稱/vue-custom-template 新專案名稱
+
+# 私有倉庫
+vue create --preset github使用者名稱/vue-custom-template --clone 新專案名稱
+\`\`\`
+
+### 啟動新專案
+
+\`\`\`bash
+cd 新專案名稱
+npm install
+npm run serve
+\`\`\`
+
+## 錯誤處理
+
+全局錯誤處理已通過 \`errorPlugin.js\` 設定，可以根據需求進行自定義。
+
+## 作者
+
+${options.author || ''}
+`
+    });
+    
     // 渲染模板文件
     api.render('./template');
-
-    // 渲染特定文件
-    api.render({
-        'src/plugins/vuetify.js': './template/src/plugins/vuetify.js',
-        'README.md': './README.md',
-        'src/main.js': './template/src/main.js'
-    });
 
     // 創建完成後執行的動作
     api.onCreateComplete(() => {
         const fs = require('fs');
 
-        // 创建環境變數檔案
+        // 創建環境變數檔案
         const envDev = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
 VUE_APP_NAME=${options.appName || '後台管理系統'}`;
 
@@ -63,21 +133,7 @@ VUE_APP_NAME=${options.appName || '後台管理系統'}`;
         fs.writeFileSync(api.resolve('.env.development'), envDev);
         fs.writeFileSync(api.resolve('.env.production'), envProd);
         fs.writeFileSync(api.resolve('.env.m4ore'), envM4ore);
-
-        // 替換其他文件中的變量
-        const files = [
-            'README.md'
-        ];
-
-        files.forEach(file => {
-            const filePath = api.resolve(file);
-            if (fs.existsSync(filePath)) {
-                let content = fs.readFileSync(filePath, { encoding: 'utf-8' });
-                content = content.replace(/<%=name%>/g, options.name || '');
-                content = content.replace(/<%=description%>/g, options.description || '');
-                content = content.replace(/<%=author%>/g, options.author || '');
-                fs.writeFileSync(filePath, content);
-            }
-        });
+        
+      
     });
 };
