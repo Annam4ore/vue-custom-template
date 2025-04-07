@@ -41,7 +41,7 @@ module.exports = (api, options) => {
     // 渲染特定文件
     api.render({
         'src/plugins/vuetify.js': './template/src/plugins/vuetify.js',
-        'README.md': './template/README.md',
+        'README.md': './README.md',
         'src/main.js': './template/src/main.js'
     });
 
