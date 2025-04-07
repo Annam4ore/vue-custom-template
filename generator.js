@@ -36,9 +36,31 @@ module.exports = (api, options) => {
         }
     });
     
-    // 直接生成 README.md 文件
-    api.render({
-        'README.md': () => `# ${options.name || '專案名稱'}
+    // 只渲染模板檔案，不要嘗試生成動態檔案
+    api.render('./template');
+
+    // 創建完成後執行的動作
+    api.onCreateComplete(() => {
+        const fs = require('fs');
+        const path = require('path');
+
+        // 創建環境變數檔案
+        const envDev = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        const envProd = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        const envM4ore = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        // 寫入環境檔案
+        fs.writeFileSync(api.resolve('.env.development'), envDev);
+        fs.writeFileSync(api.resolve('.env.production'), envProd);
+        fs.writeFileSync(api.resolve('.env.m4ore'), envM4ore);
+        
+        // 生成 README.md
+        const readmeContent = `# ${options.name || '專案名稱'}
 
 > ${options.description || '專案描述'}
 
@@ -88,10 +110,10 @@ npm install -g @vue/cli
 
 \`\`\`bash
 # 公開倉庫
-vue create --preset github使用者名稱/vue-custom-template 新專案名稱
+vue create --preset 用戶名/vue-custom-template 新專案名稱
 
 # 私有倉庫
-vue create --preset github使用者名稱/vue-custom-template --clone 新專案名稱
+vue create --preset 用戶名/vue-custom-template --clone 新專案名稱
 \`\`\`
 
 ### 啟動新專案
@@ -109,31 +131,7 @@ npm run serve
 ## 作者
 
 ${options.author || ''}
-`
-    });
-    
-    // 渲染模板文件
-    api.render('./template');
-
-    // 創建完成後執行的動作
-    api.onCreateComplete(() => {
-        const fs = require('fs');
-
-        // 創建環境變數檔案
-        const envDev = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-VUE_APP_NAME=${options.appName || '後台管理系統'}`;
-
-        const envProd = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-VUE_APP_NAME=${options.appName || '後台管理系統'}`;
-
-        const envM4ore = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-VUE_APP_NAME=${options.appName || '後台管理系統'}`;
-
-        // 寫入環境檔案
-        fs.writeFileSync(api.resolve('.env.development'), envDev);
-        fs.writeFileSync(api.resolve('.env.production'), envProd);
-        fs.writeFileSync(api.resolve('.env.m4ore'), envM4ore);
-        
-      
+`;
+        fs.writeFileSync(api.resolve('README.md'), readmeContent);
     });
 };
