@@ -41,10 +41,10 @@ module.exports = (api, options) => {
 
     // 處理環境變數檔案
     api.render({
-        '.env.development': './template/.env.development',
-        '.env.production': './template/.env.production',
-        '.env.m4ore': './template/.env.m4ore',
-        'vue.config.js': './template/vue.config.js'
+        '.env.development': './.env.development',
+        '.env.production': './.env.production',
+        '.env.m4ore': './.env.m4ore',
+        'vue.config.js': './vue.config.js'
     });
     api.render({
         'src/plugins/vuetify.js': './template/src/plugins/vuetify.js'
