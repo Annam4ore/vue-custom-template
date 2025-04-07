@@ -9,7 +9,7 @@ import { formatDate, formatTime, formatDateAndTime, getDayFormat } from '@/libs/
 import { numberToCurrencyNo } from '@/libs/numberToCurrency'
 import ErrorPlugin from './errorPlugin'
 
-
+import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(VueAxios, axios)
 Vue.use(ErrorPlugin);
