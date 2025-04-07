@@ -9,7 +9,15 @@
     "@vue/cli-plugin-router": {},
     "@vue/cli-plugin-vuex": {},
     "vue-cli-plugin-vuetify": {
-      "preset": "default"
+      "preset": "configure",
+      "replaceComponents": true,
+      "iconFont": "mdi",
+      "installFonts": true,
+      "locale": "zh-Hant",
+      "useAlaCarte": true,
+      "useCustomProperties": false,
+      "usePolyfill": true,
+      "useTheme": true
     }
   },
   "vueVersion": "2",
