@@ -35,40 +35,37 @@ module.exports = (api, options) => {
             "vuetify-loader": "^1.7.0"
         }
     });
-
     // 渲染模板文件
     api.render('./template');
 
-    // 處理環境變數檔案
+    // 渲染特定文件
     api.render({
-        '.env.development': () => `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-    VUE_APP_NAME=${options.appName || '後台管理系統'}`,
-        '.env.production': () => `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-    VUE_APP_NAME=${options.appName || '後台管理系統'}`,
-        '.env.m4ore': () => `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
-    VUE_APP_NAME=${options.appName || '後台管理系統'}`
-    });
-    api.render({
-        'src/plugins/vuetify.js': './template/src/plugins/vuetify.js'
-    });
-
-
-    // 添加 README
-    api.render({
-        'README.md': './template/README.md'
-    });
-    api.render({
+        'src/plugins/vuetify.js': './template/src/plugins/vuetify.js',
+        'README.md': './template/README.md',
         'src/main.js': './template/src/main.js'
     });
 
     // 創建完成後執行的動作
     api.onCreateComplete(() => {
-        // 替換變量
         const fs = require('fs');
+
+        // 创建環境變數檔案
+        const envDev = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        const envProd = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        const envM4ore = `VUE_APP_BASE_API=${options.apiBaseUrl || 'https://studio-test.m4ore.com'}
+VUE_APP_NAME=${options.appName || '後台管理系統'}`;
+
+        // 寫入環境檔案
+        fs.writeFileSync(api.resolve('.env.development'), envDev);
+        fs.writeFileSync(api.resolve('.env.production'), envProd);
+        fs.writeFileSync(api.resolve('.env.m4ore'), envM4ore);
+
+        // 替換其他文件中的變量
         const files = [
-            '.env.development',
-            '.env.production',
-            '.env.m4ore',
             'README.md'
         ];
 
@@ -76,11 +73,9 @@ module.exports = (api, options) => {
             const filePath = api.resolve(file);
             if (fs.existsSync(filePath)) {
                 let content = fs.readFileSync(filePath, { encoding: 'utf-8' });
-                content = content.replace(/<%=apiBaseUrl%>/g, options.apiBaseUrl);
-                content = content.replace(/<%=appName%>/g, options.appName);
-                content = content.replace(/<%=name%>/g, options.name);
-                content = content.replace(/<%=description%>/g, options.description);
-                content = content.replace(/<%=author%>/g, options.author);
+                content = content.replace(/<%=name%>/g, options.name || '');
+                content = content.replace(/<%=description%>/g, options.description || '');
+                content = content.replace(/<%=author%>/g, options.author || '');
                 fs.writeFileSync(filePath, content);
             }
         });
