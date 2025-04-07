@@ -12,6 +12,7 @@
   "vueVersion": "2",
   "router": true,
   "vuex": true,
+  "promptsCallback": "function(prompts, answers) { return prompts }",
   "prompts": {
     "name": {
       "type": "string",
