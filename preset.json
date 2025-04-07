@@ -10,14 +10,10 @@
     "@vue/cli-plugin-vuex": {},
     "vue-cli-plugin-vuetify": {
       "preset": "configure",
-      "replaceComponents": true,
       "iconFont": "mdi",
       "installFonts": true,
       "locale": "zh-Hant",
-      "useAlaCarte": true,
-      "useCustomProperties": false,
-      "usePolyfill": true,
-      "useTheme": true
+      "useAlaCarte": true
     }
   },
   "vueVersion": "2",
