@@ -19,7 +19,8 @@ module.exports = (api, options) => {
             "vue-axios": "^3.5.2",
             "vue-router": "^3.5.1",
             "vuex": "^3.6.2",
-            "vuetify": "^2.6.0"
+            "vuetify": "^2.6.0",
+            "@mdi/font": "^7.4.47"
         },
         devDependencies: {
             "@vue/cli-plugin-babel": "~5.0.0",
@@ -35,7 +36,7 @@ module.exports = (api, options) => {
             "vuetify-loader": "^1.7.0"
         }
     });
-    
+
     // 只渲染模板檔案，不要嘗試生成動態檔案
     api.render('./template');
 
@@ -58,7 +59,7 @@ VUE_APP_NAME=${options.appName || '後台管理系統'}`;
         fs.writeFileSync(api.resolve('.env.development'), envDev);
         fs.writeFileSync(api.resolve('.env.production'), envProd);
         fs.writeFileSync(api.resolve('.env.m4ore'), envM4ore);
-        
+
         // 生成 README.md
         const readmeContent = `# ${options.name || '專案名稱'}
 
