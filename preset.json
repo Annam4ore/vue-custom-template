@@ -12,7 +12,7 @@
   "vueVersion": "2",
   "router": true,
   "vuex": true,
-  "promptsCallback": "function(prompts, answers) { return prompts }",
+  "promptsCallback": null,
   "prompts": {
     "name": {
       "type": "string",
@@ -21,7 +21,7 @@
     },
     "description": {
       "type": "string",
-      "required": false,
+      "required": true,
       "message": "專案描述",
       "default": "Vue 後台管理系統"
     },
@@ -31,11 +31,13 @@
     },
     "apiBaseUrl": {
       "type": "string",
+      "required": true,
       "message": "API 基礎 URL",
       "default": "https://studio-test.m4ore.com"
     },
     "appName": {
       "type": "string",
+      "required": true,
       "message": "應用程式名稱",
       "default": "後台管理系統"
     }
