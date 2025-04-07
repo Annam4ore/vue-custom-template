@@ -1,4 +1,20 @@
 {
+  "useConfigFiles": true,
+  "cssPreprocessors": {
+    "sass": {},
+    "less": {}
+  },
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-router": {},
+    "@vue/cli-plugin-vuex": {},
+    "vue-cli-plugin-vuetify": {
+      "preset": "default"
+    }
+  },
+  "vueVersion": "2",
+  "router": true,
+  "vuex": true,
   "prompts": {
     "name": {
       "type": "string",
@@ -25,11 +41,5 @@
       "message": "應用程式名稱",
       "default": "後台管理系統"
     }
-  },
-  "plugins": {
-    "@vue/cli-plugin-babel": {},
-    "@vue/cli-plugin-router": {},
-    "@vue/cli-plugin-vuex": {}
-  },
-  "completeMessage": "專案已成功創建！\n\n使用命令:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run serve"
+  }
 }
